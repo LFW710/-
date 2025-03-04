@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+    <div style="width: 800px; margin: 20px auto">
+        <canvas id="paretoChart"></canvas>
+    </div>
+
+<script>
+const ctx = document.getElementById('paretoChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['薯片破碎', '调味不均', '包装漏气', '色泽异常', '其他问题'],
+        datasets: [{
+            label: '缺陷频数（袋）',
+            data: [200, 150, 100, 30, 20],
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            yAxisID: 'y1',
+            datalabels: {
+                color: '#666',
+                anchor: 'end',
+                align: 'top',
+                formatter: (value) => value + '袋'
+            }
+        },{
+            label: '累计频率（%）',
+            data: [40, 70, 90, 96, 100],
+            type: 'line',
+            borderColor: '#ff6384',
+            borderWidth: 2,
+            fill: false,
+            yAxisID: 'y2',
+            datalabels: {
+                color: '#ff6384',
+                anchor: 'start',
+                align: 'right',
+                formatter: (value) => value + '%'
+            }
+        }]
+    },
+    options: {
+        scales: {
+            y1: {
+                type: 'linear',
+                position: 'left',
+                title: {display: true, text: '缺陷频数（袋）'},
+                min: 0,
+                max: 500
+            },
+            y2: {
+                type: 'linear',
+                position: 'right',
+                title: {display: true, text: '累计频率（%）'},
+                min: 0,
+                max: 100,
+                grid: {display: false}
+            }
+        },
+        plugins: {
+            datalabels: {
+                font: {size: 12},
+                display: true
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
+</script>
+</body>
+</html>
